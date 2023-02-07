@@ -54,16 +54,14 @@ except URLError as e:
 # write your own comment - what does this do?
 # streamlit.dataframe(fruityvice_normalized)
 
-streamlit.stop()
-
 
 streamlit.header("The fruit load list contains:")
 
 
 def get_fruit_load_list():
     with my_cnx.cursor() as my_curr:
-         my_cur.execute("select * from fruit_load_list")
-         return my_cur.fetchall()
+        my_cur.execute("select * from fruit_load_list")
+        return my_cur.fetchall()
 
 
 if streamlit.button("Get Fruit Load List:"):
@@ -75,10 +73,7 @@ streamlit.text("The fruit load list contains:")
 
 
 # streamlit.text(my_data_row)
-
-add_mmy_fruit = streamlit.text_input(
-    "What fruit would you like information about?", "jackfruit"
-)
-streamlit.write("The user entered ", add_mmy_fruit)
-
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')")
+        return "Thanks for adding " + new_fruit
